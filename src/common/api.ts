@@ -1,0 +1,9 @@
+export const LOGIN_URL = "auth/login";
+export const REGISTER_URL = "auth/register";
+export const USERS_URL = "auth/users";
+export const PROFILE_URL = "auth/profile";
+export const SESSION_URL = "session";
+export const SESSIONS_URL = "sessions";
+export const SPECIALIZATION_URL = "sessions";
+export const DOCTOR_URL = "doctor";
+export const DOCTORS_SEARCH_URL = "doctor/search";

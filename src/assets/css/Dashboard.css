@@ -1,0 +1,23 @@
+.box {
+    max-width: 540;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+.box-content {
+    margin-top: 2px !important;
+}
+
+.box-content:hover {
+    background-color: 1 solid #323232;
+    cursor: pointer;
+}
+
+.doc-box {
+    background: #fff;
+    margin: auto;
+}
+
+.doc-image {
+    max-height: 100px !important;
+}
