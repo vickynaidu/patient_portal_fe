@@ -7,10 +7,10 @@ export const authenticatedRequest = axios.create({
 
 authenticatedRequest.interceptors.request.use(
   config => {
-    const token = Cookies.get('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    const authToken = Cookies.get('authToken');
+    if (authToken) {
+      config.headers.Authorization = `Bearer ${authToken}`;
+    } 
 
     return config;
   },
@@ -18,4 +18,9 @@ authenticatedRequest.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+setInterval(() => {
+  const refreshToken = Cookies.get('refreshToken');
+  ////console.log("Tokens refreshed ", refreshToken);
+}, 30000);
 

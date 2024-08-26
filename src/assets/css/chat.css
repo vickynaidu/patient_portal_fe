@@ -1,0 +1,12 @@
+html, body, .container-fluid, .row {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .left-column, .right-column {
+    height: 100%; /* Ensure the columns take up 100% of the height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

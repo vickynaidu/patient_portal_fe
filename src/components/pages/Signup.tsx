@@ -37,7 +37,7 @@ const Signup: React.FC = () => {
       setIsLoading(true);
       const user = await LoginService.addUser(data);
       // eslint-disable-next-line no-console
-      console.log(`signup successful, user: ${JSON.stringify(data)}`);
+      ////console.log(`signup successful, user: ${JSON.stringify(data)}`);
       setIsLoading(false);
       navigate('/login');
     } catch (err: any) {

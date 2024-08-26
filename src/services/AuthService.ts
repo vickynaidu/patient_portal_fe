@@ -14,6 +14,11 @@ export interface User {
   firstName: string;
   lastName: string;
   role: Role;
+  dayStart?: string | undefined;
+  dayEnd?: string | undefined;
+  lunchStart?: string | undefined;
+  lunchEnd?: string | undefined;
+  slotDuration?: number | 0;
 }
 
 const registeredUsers = new Map<string, User>([]);
@@ -74,7 +79,8 @@ async function logout(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
       localStorage.removeItem(keyUser);
-      jsCookie.remove('token');
+      jsCookie.remove('authToken');
+      jsCookie.remove('refreshToken');
       resolve();
     }, 1000);
   });

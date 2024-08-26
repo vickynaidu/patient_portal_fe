@@ -36,6 +36,7 @@ import Settings from '../components/pages/Settings';
 import AuthProvider from '../hooks/AuthProvider';
 import SessionsView from '../components/pages/Sessions';
 import Specializations from '../components/pages/Specializations';
+import Chat from '../components/pages/Chat';
 
 const App: React.FC = () => {
   
@@ -60,6 +61,7 @@ const App: React.FC = () => {
             <Route path="settings" element={<Settings />} />
             <Route path="sessions" element={<SessionsView />} />
             <Route path="specialization" element={<Specializations />} />
+            <Route path="chat" element={<Chat />} />
           </Route>
         </Routes>
       </AuthProvider>

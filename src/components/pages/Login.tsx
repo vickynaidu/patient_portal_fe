@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { login } from '../../features/authSlice';
 import { Button, Form, Container, Row, Col, Alert } from 'react-bootstrap';
 import { LoginService } from '../../services/LoginService';
-import { login } from '../../slices/Login.slice';
+import { login } from '../../slices/login.slice';
 import { AppDispatch, RootState, store } from '../../app/store';
 import "../../assets/css/Login.css";
 import BackgroundImage from "../../assets/images/background.png";
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     const userData: LoginData = { email: inputUsername, password: inputPassword };
     const res: any = await LoginService.userAuthetication(userData, dispatch);
-    console.log("Login res: ", res);
+    ////console.log("Login res: ", res);
     if (res["status"] === 200 || res["status"] === 201) {
       dispatch(login({
         isAuthenticated: true,
@@ -54,13 +54,13 @@ const Login: React.FC = () => {
   const processDashBardRequests = async () => {
     const user = await LoginService.getuserProfile();
     delete user.password;
-    setSession(user, jsCookie.get("token") || "");
+    setSession(user, jsCookie.get("authToken") || "");
     navigate(redirectPath(search));
   }
 
   useEffect(() => {
-    const token = jsCookie.get('token');
-    console.log("After login: ", token, isAuthenticated);
+    const token = jsCookie.get('authToken');
+    ////console.log("After login: ", token, isAuthenticated);
     if (isAuthenticated && token) {
       processDashBardRequests();
     }
@@ -73,10 +73,10 @@ const Login: React.FC = () => {
   }
 
   const handlePassword = () => {
-    console.log("Trying to reset password...!");
+    ////console.log("Trying to reset password...!");
   };
   const handleSignup = () => {
-    console.log("Trying to register...!");
+    ////console.log("Trying to register...!");
     navigate('/signup');
   };
   const windowHeight = window.innerHeight;

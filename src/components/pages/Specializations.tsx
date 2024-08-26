@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import UserTableRow from './UserTableRow';
 import useAuth from '../../hooks/UseAuth';
@@ -7,14 +7,17 @@ import { LoginService } from '../../services/LoginService';
 import { Specialization } from '../../models/ISpecialization';
 import { SpecializationsService } from '../../services/SpecializationsService';
 import SpecializationsTableRow from './SpecializationsTableRow';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { specializationList } from '../../common/constants';
 
 const Specializations: React.FC = () => {
   const title = 'Specializations';
 
   const { getUsers } = useAuth();
-  const [specialization, setSpecialization] = useState<Specialization[] | undefined>();
+  const [specializations, setSpecializations] = useState<Specialization[]>();
   const [show, setShow] = useState(false);
+  const [spec, setSpec] = useState<string>("");
+  const [startYear, setStartYear] = useState<string>("");
   const handleClose = () => {
     setShow(false);
     //setIsEditable(!isEditable);
@@ -24,21 +27,35 @@ const Specializations: React.FC = () => {
     let isMounted = true;
 
     (async () => {
-      try {
-        //const allusers = await getUsers();
-        const res = await SpecializationsService.getAllSpecializations();
-        if (isMounted) {
-          setSpecialization(res.data);
-        }
-      } catch (err) {
-        // eslint-disable-next-line no-alert
-        alert(`failed to load Specialization: ${err}`);
-
-      }
+      getAllSpecializations();
     })();
 
     return () => { isMounted = false; };
   }, [getUsers]);
+
+  const getAllSpecializations = async () => {
+    try {
+      //const allusers = await getUsers();
+      const res = await SpecializationsService.getAllSpecializations();
+      ////console.log("Specialization res: ", res);
+      setSpecializations(res);
+    } catch (err) {
+      // eslint-disable-next-line no-alert
+      alert(`failed to load Specialization: ${err}`);
+
+    }
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    ////console.log("Handle submit called: ", spec, startYear);
+    const res = await SpecializationsService.createSpecialization({"specialization": spec, "start_year": parseInt(startYear)});
+    ////console.log("create res: ", res);
+    if(res.status === 200 || res.status === 201) {
+      ////console.log("Specialization added successfully");
+      getAllSpecializations();
+    }
+  };
 
   return (
     <>
@@ -52,7 +69,9 @@ const Specializations: React.FC = () => {
 
           <div className="btn-toolbar mb-2 mb-md-0">
             <div className="btn-group me-2">
-              <button type="button" className="btn btn-sm btn-primary" on-click={() => setShow(true)}>Create</button>
+              <Button className="btn btn-sm btn-primary" onClick={() => setShow(true)}>
+                Create
+              </Button>
             </div>
           </div>
         </div>
@@ -67,8 +86,8 @@ const Specializations: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {specialization && specialization?.length > 0
-                ? <SpecializationsTableRow specializations={specialization} />
+              {specializations && specializations?.length > 0
+                ? <SpecializationsTableRow specializations={specializations} />
                 : null}
             </tbody>
           </table>
@@ -78,15 +97,25 @@ const Specializations: React.FC = () => {
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="Specialization">
+              <Form.Label>Select Specialization</Form.Label>
+              <Form.Select required aria-label="Default select example" name='spec' onChange={(e) => setSpec(e.target.value)}>
+                <option key={0} value="">Select Specialization</option>
+                {specializationList.map((spec, i) => <option value={spec} key={i+1}>{spec}</option>)}
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="start_year">
+              <Form.Label>Enter starting year</Form.Label>
+              <Form.Control required type="number" placeholder="Start year" name="start_year" onChange={(e) => setStartYear(e.target.value)}/>
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
       </Modal>
     </>
   );

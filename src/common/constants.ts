@@ -11,10 +11,11 @@ const clientUrls: SidebarItem[] = [
   { path: '/console/specialization', title: 'Specialization', icon: 'bi-layers' },
   { path: '/console/sessions', title: 'Appointments', icon: 'bi-layers' },
   { path: '/console/users', title: 'Users', icon: 'bi-people' },
+  { path: '/console/chat', title: 'Messaging', icon: 'bi-gear' },
   { path: '/console/settings', title: 'Settings', icon: 'bi-gear' },
 ];
 
-const specializations: string[] = [
+const specializationList: string[] = [
   "Gynaecology",
   "General Physician",
   "Dermatology",
@@ -47,5 +48,5 @@ export {
   emailPattern,
   namePattern,
   clientUrls,
-  specializations
+  specializationList
 };

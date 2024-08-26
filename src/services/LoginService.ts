@@ -10,43 +10,44 @@ export const LoginService = {
   userAuthetication: async (user: LoginData, dispatch: any) => {
     try{
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/${LOGIN_URL}`, user);
-      console.log("Login res: ", res.data);
-      jsCookie.set('token', res.data.token);
+      ////console.log("Login res: ", res.data);
+      jsCookie.set('authToken', res.data.authToken);
+      jsCookie.set('refreshToken', res.data.refreshToken);
       return res;
     }catch(err: any){
-      console.log("Error message: ", err);
+      ////console.log("Error message: ", err);
       return err;
     }
   },
   addUser: async (user: UserData) => {
     try{
-      console.log("Requested data: ", user);
+      ////console.log("Requested data: ", user);
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/${REGISTER_URL}`, user);
-      console.log("User created successfully: ", res.data);
+      ////console.log("User created successfully: ", res.data);
       return res;
     }catch(err: any){
-      console.log("Error message: ", err);
+      ////console.log("Error message: ", err);
       return err;
     }
   },
   getUsers: async () => {
     try{
       const res = await authenticatedRequest.get(`${process.env.REACT_APP_API_URL}/${USERS_URL}`);
-      console.log("getUsers res: ", res.data);
+      ////console.log("getUsers res: ", res.data);
       return res;
     }catch(err: any){
-      console.log("Error message: ", err);
+      ////console.log("Error message: ", err);
       return err;
     }
   },
   getuserProfile: async () => {
     try{
       const res = await authenticatedRequest.get(`${process.env.REACT_APP_API_URL}/${PROFILE_URL}`);
-      console.log("User profile data: ", res);
+      ////console.log("User profile data: ", res);
       delete res.data.password;
       return res.data;
     }catch(err: any){
-      console.log("Error message: ", err);
+      ////console.log("Error message: ", err);
       return err;
     }
   }

@@ -26,6 +26,7 @@ const StatusAlert: React.FC<StatusAlertProps> = ({
   const [isShow, setIsShow] = useState(show);
 
   useEffect(() => {
+    //console.log("StatusAlert is trying to show");
     setIsShow(show);
     if (show) {
       const timeout = setTimeout(() => {

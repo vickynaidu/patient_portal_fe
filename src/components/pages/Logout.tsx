@@ -8,7 +8,9 @@ import useAuth from '../../hooks/UseAuth';
 import './auth.css';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
-import { clearLoginSession } from '../../slices/Login.slice';
+import { clearLoginSession } from '../../slices/login.slice';
+import SocketService from '../../services/SocketService';
+import { setSocketState } from '../../slices/socket.slice';
 
 const Logout: React.FC = () => {
   const title = 'Logout';
@@ -21,13 +23,14 @@ const Logout: React.FC = () => {
   const handleLogout = async (e: any) => {
     setIsLoading(true);
     e.preventDefault();
-    console.log("Dispatching clearLoginSession");
+    ////console.log("Dispatching clearLoginSession");
     dispatch(clearLoginSession({
       isAuthenticated: false,
       message: ""
     }));
     await logout();
     setIsLoading(false);
+    SocketService.disconnect();
     navigate('/');
   };
 

@@ -3,7 +3,7 @@ import Jdenticon from "./Jdenticon";
 
 
 function UserTableRow({ users }: { users: User[] | undefined }): JSX.Element {
-    console.log("UsersTableRow users: ", users);
+    ////console.log("UsersTableRow users: ", users);
     if (!users) {
         return <></>;
     }

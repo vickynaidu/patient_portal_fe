@@ -1,6 +1,8 @@
+import { UserData } from "./IUser";
+
 export interface Specialization {
     _id: string;
+    doctor: UserData;
     specialization: string;
-    session_with: string;
     start_year: number;
 }

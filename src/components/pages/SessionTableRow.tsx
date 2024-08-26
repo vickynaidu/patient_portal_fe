@@ -14,14 +14,14 @@ function SessionTableRow({ sessions, handleIsEditable }: { sessions: Session[] |
     return (
         <>
             {sessions.map((session, i) => {
-                const date = moment(session.session_time).format("MM/DD/YYYY");
-                const time = moment(session.session_time).format("HH:MM");
+                const date = moment(session.session_date).format("MM/DD/YYYY");
+                //const time = moment(session.session_time).format("HH:MM");
                 const isPast = moment(session.session_time).isBefore();
                 return (
                     <tr key={i} className="align-middle">
                         <td>{i + 1}</td>
                         <td>{date}</td>
-                        <td>{time}</td>
+                        <td>{session.session_time}</td>
                         <td>{session.session_with}</td>
                         <td><Jdenticon className="" name={session.session_with} height="32px" width="32px" /></td>
                         <td>

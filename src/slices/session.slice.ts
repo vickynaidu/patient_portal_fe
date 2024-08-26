@@ -9,7 +9,8 @@ const initialState: SessionState = {
     allSessions: [],
     session: {
         _id: "",
-        session_time: null,
+        session_date: null,
+        session_time: "",
         session_with: "",
         meeting_notes: [],
         prescription: [],
@@ -24,7 +25,7 @@ export const sessionSlice = createSlice({
     reducers: {
         setSessions: (state = initialState, action: PayloadAction<SessionState>) => {
             state.allSessions = action.payload.allSessions;
-            console.log("session set action: ", action);
+            //console.log("session set action: ", action);
             Object.assign(state, action.payload);
         },
     },

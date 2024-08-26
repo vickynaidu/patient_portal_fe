@@ -14,18 +14,18 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action: PayloadAction<AuthState>) => {
-            console.log("login action: ", action);
-            console.log("before update: ", state.isAuthenticated, state.message);
+            ////console.log("login action: ", action);
+            ////console.log("before update: ", state.isAuthenticated, state.message);
             state.isAuthenticated = action.payload.isAuthenticated;
             state.message = action.payload.message;
-            console.log("after update: ", state.isAuthenticated, state.message);
+            ////console.log("after update: ", state.isAuthenticated, state.message);
         },
         clearLoginSession: (state, action: PayloadAction<AuthState>) => {
-            console.log("logout action: ", action);
-            console.log("before update: ", state.isAuthenticated, state.message);
+            ////console.log("logout action: ", action);
+            ////console.log("before update: ", state.isAuthenticated, state.message);
             state.isAuthenticated = action.payload.isAuthenticated;
             state.message = action.payload.message;
-            console.log("after update: ", state.isAuthenticated, state.message);
+            ////console.log("after update: ", state.isAuthenticated, state.message);
         },
     },
 });

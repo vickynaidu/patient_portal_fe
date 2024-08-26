@@ -6,7 +6,12 @@ export interface UserData {
     firstName: string;
     lastName: string;
     type: string;
-    role: Role
+    role: Role;
+    dayStart?: string;
+    dayEnd?: string;
+    lunchStart?: string;
+    lunchEnd?: string;
+    slotDuration?: number;
 }
 
 export interface Role {

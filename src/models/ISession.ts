@@ -11,7 +11,8 @@ interface Prescription {
 
 export interface Session {
     _id: string;
-    session_time: Date | null;
+    session_date: Date | null;
+    session_time: string;
     session_with: string;
     meeting_notes: [MeetingNote] | [];
     prescription: [Prescription] | [];

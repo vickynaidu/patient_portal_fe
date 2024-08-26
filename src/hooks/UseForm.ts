@@ -19,7 +19,7 @@ const useForm = (options: any) => {
     e.preventDefault();
 
     const validators = options?.validators;
-    console.log("Validators: ", validators);
+    ////console.log("Validators: ", validators);
     if (validators) {
       let valid = true;
       const errs: any = {};

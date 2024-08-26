@@ -1,23 +1,66 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Jdenticon from './Jdenticon';
 import '../../assets/css/console-navbar.css';
 import logo from '../../assets/images/logo.svg';
 import useAuth from '../../hooks/UseAuth';
 import { logout } from '../../services/AuthService';
-import { AppDispatch } from '../../app/store';
-import { useDispatch } from 'react-redux';
-import { clearLoginSession } from '../../slices/Login.slice';
+import { AppDispatch, RootState } from '../../app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearLoginSession } from '../../slices/login.slice';
+import { Message } from '../../models/IMessage';
+import { setSocketState } from '../../slices/socket.slice';
+import { useEffect, useState } from 'react';
+import SocketService from '../../services/SocketService';
+import { LoginService } from '../../services/LoginService';
+import { setChatState } from '../../slices/chat.slice';
+import StatusAlert from './StatusAlert';
+import { Alert } from 'react-bootstrap';
 
 const ConsoleNavbar: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useAuth();
   const user = auth.getSession();
+  const messageReceived = useSelector((state: RootState) => state.socketReducer.messageReceived);
+  const { pathname } = useLocation();
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (pathname !== '/console/chat') {
+      //console.log("New message received in ConsoleNavbar ", messageReceived);
+      setShow(true);
+    }
+  }, [messageReceived]);
+
+  useEffect(() => {
+    const subscribeChat = async () => {
+      try {
+        const users = await LoginService.getUsers();
+        dispatch(setChatState({
+          allUsers: users,
+          selectedUser: null,
+          userChatHistory: []
+        }));
+        // Handle socket disconnect
+        return () => {
+          SocketService.disconnect();
+
+          dispatch(setSocketState({
+            status: "disconnected",
+            messageReceived: null
+          }))
+        };
+      } catch (error) {
+        console.error("Failed to connect to WebSocket server:", error);
+      };
+      subscribeChat();
+    }
+  }, []);
 
   const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await logout();
-    console.log("Dispatching clearLoginSession");
+    ////console.log("Dispatching clearLoginSession");
     dispatch(clearLoginSession({
       isAuthenticated: false,
       message: ""
@@ -68,6 +111,9 @@ const ConsoleNavbar: React.FC = () => {
           </ul>
         </div>
       </div>
+      {show ? <Alert className="status-alert" variant='info' show={show} onClose={() => setShow(false)} dismissible>
+      New message from <strong className="mx-2">{messageReceived?.from}</strong>
+    </Alert> : null}
     </nav>
   );
 }

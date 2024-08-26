@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
       </div>
     )
   };
-  console.log("user obj with roles: ", user);
+  ////console.log("user obj with roles: ", user);
   const isAdmin: boolean = user && user?.role.name === 'Admin' ? true : false;
   return (
     isAdmin ? renderAdminSideBar() : renderUserSideBar()
