@@ -139,10 +139,6 @@ const Dashboard: React.FC = () => {
         }
     }, [allSessions]);
 
-    const openAppointment = (id: string) => {
-        ////console.log("Appointment details of id: ", id);
-    }
-
     const onClickOfUser = (user: UserData) => {
         //console.log("Selected user: ", user);
         navigate('/console/chat', { state: user });

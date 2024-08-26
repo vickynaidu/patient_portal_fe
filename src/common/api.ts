@@ -1,4 +1,5 @@
 export const LOGIN_URL = "auth/login";
+export const REFRESH_TOKEN_URL = "auth/refresh";
 export const REGISTER_URL = "auth/register";
 export const USERS_URL = "auth/users";
 export const PROFILE_URL = "auth/profile";

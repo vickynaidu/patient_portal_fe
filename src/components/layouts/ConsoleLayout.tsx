@@ -11,7 +11,7 @@ const ConsoleLayout: React.FC = () => {
   //const auth = useAuth();
   const { pathname } = useLocation();
   const isAuthenticated = useSelector((state: RootState) => state.loginReducer.isAuthenticated);
-  const token = jsCookie.get("token");
+  const token = jsCookie.get("authToken");
 
   if (isAuthenticated || token) {
     return (
